@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>旋转按钮</title>
+	<meta charset="utf-8">
+	<style>
+	#container{
+		width: 50px;
+		height: 50px;
+		/*position: absolute;*/
+		margin:500px auto;
+	}
+	#home{
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		background: url(img/home.png);
+		-webkit-transition: transform .5s linear;
+       -moz-transition: transform .5s linear;
+       -ms-transition: transform .5s linear;
+        -o-transition: transform .5s linear;
+        transition: transform .5s linear;
+	}
+	#menu img{
+		position: absolute;
+		width: 42px;
+		height: 42px;
+		-webkit-transition: transform .5s linear;
+        -moz-transition: transform .5s linear;
+        -ms-transition: transform .5s linear;
+        -o-transition: transform .5s linear;
+     	transition: transform .5s linear;
+	}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="menu">		
+			<img src="img/close.png">
+			<img src="img/full.png">
+			<img src="img/open.png">
+			<img src="img/prev.png">
+			<img src="img/refresh.png"> 
+			<div id="home"></div>
+		</div>
+
+	</div>
+	<script>
+		var bClick=false;
+		var oHome=document.getElementById('home');
+		var oMenu=document.getElementById('menu');
+		var aImg=oMenu.getElementsByTagName('img');
+		oHome.addEventListener('click',function(){
+			if(bClick){
+				setStyle(this , 'transform','rotate(0deg)');
+				for(var i=0;i<5;i++){
+					setStyle(aImg[i],'transitionDelay',i*50+'ms');
+					setStyle(aImg[i],'transform', 'translate(0,0) rotate(0deg) scale(1)');
+				}
+			}else{
+				setStyle(this , 'transform','rotate(-360deg)');
+				for(var i=0;i<5;i++){
+					setStyle(aImg[i],'transitionDelay','(5-i)*50+ms');
+					var x=-150*Math.cos(22.5*i*Math.PI/180);
+					var y=-150*Math.sin(22.5*i*Math.PI/180);
+					setStyle(aImg[i],'transform','translate('+x+'px,'+y+'px) rotate(-360deg) scale(1)');
+				}
+			}
+			bClick=!bClick;
+		},false);
+		for(var i=0;i<5;i++){
+			aImg[i].addEventListener('click', clickHandler,false);
+		}
+		function clickHandler(){
+			// current=this.style.transform;
+			//  setStyle(this,'transform',current+'scale(2)');
+			this.addEventListener('webkitTransitionEnd',fn,false);
+		}
+		function fn(){
+			setStyle(this,'transform',current.replace(/scale\(1\)/,'')+'scale(1)');
+			this.removeEventListener('webkitTransitionEnd',fn);
+		}
+		  function setStyle(elem, prop, value){
+                ['Webkit', 'Moz', 'Ms', 'O', ''].forEach(function(prefix){
+                    elem.style[prefix + prop.charAt(0).toUpperCase() + prop.substring(1)] = value;
+                });
+            }
+	</script>
+</body>
+</html>
