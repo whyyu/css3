@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>旋转的照片</title>
+	<style>
+	body{
+		-webkit-perspective:1000px;
+		-webkit-perspective-origin:50% -90%;
+	}
+	#container{
+		width: 125px;
+		height: 125px;
+		margin: 200px auto;
+		-webkit-transform-style:preserve-3d;
+		-webkit-transition:all 1s linear;
+	}
+	#container img{
+		width: 125px;
+		height: 125px;
+		position: absolute;
+		-webkit-transition:all 1s linear;
+	}
+	</style>
+</head>
+<body>
+	<div id="container">
+	</div>
+	<script>
+		var oContainer=document.getElementById('container');
+		var index=1;
+		for(i=0;i<9;i++){
+		var img=new Image();
+			img.src="img1/thumbs/"+(i+1)+".jpg";
+			oContainer.appendChild(img);
+		}
+		oContainer.onclick=function () {
+			this.style.WebkitTransform='rotateY('+40*index+'deg)';
+			index++;
+		}
+		var aImg=oContainer.getElementsByTagName('img');
+		setTimeout(function(){
+			for(i=0;i<aImg.length;i++){
+			aImg[i].style.TransitionDelay=100*i+'ms';
+			aImg[i].style.WebkitTransform='rotateY('+(9-i)*40+'deg) translateZ(200px)';
+		} 
+		},1000)
+
+
+
+	</script>
+</body>
+</html>
