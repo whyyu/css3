@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title></title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	ul{
+		list-style: none;
+	}
+	#time{
+		width: 500px;
+		height: 500px;
+		margin: 200px auto;
+		background: #eee;
+		position: relative;
+	}
+	#biaopan{
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		border: 5px solid;
+		border-color: black;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -100px;
+		margin-left: -100px;
+	}
+	#biaopan li{
+		position: absolute;
+		width: 2px;
+		height: 5px;
+		background: black;
+		left: 100px;
+		-webkit-transform-origin: 0 100px;
+	}
+	#biaopan li:nth-child(5n + 1){
+			height: 10px;
+		}
+	#shizhen{
+		width: 6px;
+		height: 40px;
+		background: #000;
+		position: absolute;
+		left: 252px;
+		top: 210px;
+		-webkit-transform-origin: bottom;
+		}
+	#fenzhen{
+		width: 6px;
+		height: 60px;
+		background: #000;
+		position: absolute;
+		left: 252px;
+		top: 190px;
+		-webkit-transform-origin: bottom;
+		}
+	#miaozhen{
+		width: 2px;
+		height: 80px;
+		background: #f00;
+		position: absolute;
+		left: 254px;
+		top: 170px;
+		-webkit-transform-origin: bottom;
+		}
+	</style>
+</head>
+<body>
+	<div id="time">
+		<ul id="biaopan"></ul>
+		<div id="shizhen"></div>
+		<div id="fenzhen"></div>
+		<div id="miaozhen"></div>
+	</div>
+	<script>
+		var oBiaoPan=document.getElementById('biaopan');
+		var oShiZhen=document.getElementById('shizhen');
+		var oFenZhen=document.getElementById('fenzhen');
+		var oMiaoZhen=document.getElementById('miaozhen');
+		var html = '';
+		for(var i=0; i<60; i++){
+			html += '<li style="-webkit-transform:rotate('+ i*6 +'deg);"></li>';
+		}
+		oBiaoPan.innerHTML = html;
+		function run(){
+			var now = new Date();
+			var seconds = now.getSeconds(),
+				minute = now.getMinutes(),
+				hour = now.getHours();
+			oShiZhen.style.WebkitTransform = 'rotate('+ (hour+minute/60+seconds/3600) * 30 +'deg)';
+			oFenZhen.style.WebkitTransform = 'rotate('+( minute+seconds/60 )* 6 +'deg)';
+			oMiaoZhen.style.WebkitTransform = 'rotate('+ seconds * 6 +'deg)';
+		}
+		run();
+		setInterval(run, 1000);
+	</script>
+</body>
+</html>
